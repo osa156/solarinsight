@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Haven | Luxury Boutique Guest House</title>
+    <meta name="description" content="Experience unparalleled luxury at Serenity Haven, where bespoke accommodations meet breathtaking natural beauty.">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    
+    <!-- SplitType -->
+    <script src="https://unpkg.com/split-type"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Barba.js -->
+    <script src="https://unpkg.com/@barba/core"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'haven-gold': '#D4AF37',
+                        'haven-dark': '#1A1A1A',
+                        'haven-cream': '#F5F5DC',
+                        'haven-sage': '#87A878',
+                        'haven-charcoal': '#36454F'
+                    },
+                    fontFamily: {
+                        'serif': ['Cormorant Garamond', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-bg: #0F0F0F;
+            --light-bg: #FAFAFA;
+            --text-dark: #1A1A1A;
+            --text-light: #F5F5DC;
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Smooth Scroll Container */
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        /* Text Selection */
+        ::selection {
+            background: var(--primary-gold);
+            color: var(--dark-bg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 4px;
+        }
+
+        /* Typography */
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Split Text Animation Classes */
+        .split-char {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        .split-word {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .split-line {
+            display: block;
+            overflow: hidden;
+        }
+
+        /* Magnetic Button Effect */
+        .magnetic-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s var(--transition-smooth);
+        }
+
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #FFF 50%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Image Reveal Mask */
+        .reveal-mask {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+            transition: clip-path 1.2s var(--transition-smooth);
+        }
+
+        .reveal-mask.revealed {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Parallax Container */
+        .parallax-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .parallax-img {
+            will-change: transform;
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--primary-gold);
+            transform: translateX(-101%);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(0);
+        }
+
+        /* Room Card Hover */
+        .room-card {
+            transition: transform 0.6s var(--transition-smooth);
+        }
+
+        .room-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .room-card .room-img {
+            transition: transform 0.8s var(--transition-smooth);
+        }
+
+        .room-card:hover .room-img {
+            transform: scale(1.1);
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s, width 0.3s, height 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--dark-bg);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loader-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--primary-gold);
+            overflow: hidden;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary-gold);
+            transition: width 0.3s;
+        }
+
+        /* WebGL Canvas */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Page Transition Overlay */
+        .page-transition {
+            position: fixed;
+            inset: 0;
+            background: var(--primary-gold);
+            z-index: 9998;
+            transform: translateY(100%);
+        }
+
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s var(--transition-smooth);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        /* Form Styling */
+        .form-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding: 15px 0;
+            width: 100%;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: var(--primary-gold);
+        }
+
+        .form-label {
+            position: absolute;
+            left: 0;
+            top: 15px;
+            color: rgba(255,255,255,0.5);
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label {
+            top: -10px;
+            font-size: 0.8rem;
+            color: var(--primary-gold);
+        }
+
+        /* Video Background */
+        .video-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Masonry Grid */
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masonry-grid {
+                column-count: 1;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--dark-bg);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Responsive Typography */
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+        }
+
+        /* Utility Classes */
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        /* Hide on load for animation */
+        .gsap-reveal {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .gsap-reveal {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    </style>
+</head>
+<body data-barba="wrapper">
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-text">
+            <span class="split-loader">SERENITY HAVEN</span>
+        </div>
+        <div class="loader-bar">
+            <div class="loader-progress" id="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- WebGL Background -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="page-transition"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-6 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif text-haven-gold tracking-wider z-50 relative" data-barba-prevent>
+                SERENITY HAVEN
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#about" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">About</a>
+                <a href="#rooms" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Rooms</a>
+                <a href="#dining" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Dining</a>
+                <a href="#spa" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Spa</a>
+                <a href="#experiences" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Experiences</a>
+                <a href="#gallery" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Gallery</a>
+                <a href="#contact" class="nav-link text-sm tracking-widest uppercase text-white/80 hover:text-white transition-colors">Contact</a>
+                <button class="magnetic-btn bg-haven-gold text-haven-dark px-6 py-3 text-sm tracking-widest uppercase font-semibold hover:bg-white transition-colors" onclick="showBookingModal()">
+                    Book Now
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden z-50 text-white" id="menu-toggle" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="flex flex-col items-center gap-8">
+            <a href="#about" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">About</a>
+            <a href="#rooms" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Rooms</a>
+            <a href="#dining" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Dining</a>
+            <a href="#spa" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Spa</a>
+            <a href="#experiences" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Experiences</a>
+            <a href="#gallery" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Gallery</a>
+            <a href="#contact" class="text-3xl font-serif text-white hover:text-haven-gold transition-colors mobile-link">Contact</a>
+            <button class="mt-8 bg-haven-gold text-haven-dark px-8 py-4 text-lg tracking-widest uppercase font-semibold" onclick="showBookingModal()">
+                Book Your Stay
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main data-barba="container" data-barba-namespace="home">
+        
+        <!-- Section 1: Hero -->
+        <section class="relative h-screen w-full overflow-hidden flex items-center justify-center" id="hero">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80" 
+                     alt="Luxury Guest House Exterior" 
+                     class="w-full h-full object-cover scale-110 parallax-img"
+                     id="hero-bg">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+                <p class="text-haven-gold tracking-[0.3em] uppercase text-sm mb-6 gsap-reveal" id="hero-subtitle">
+                    Welcome to Paradise
+                </p>
+                <h1 class="hero-title font-serif text-white mb-8 leading-tight gsap-reveal" id="hero-title">
+                    Where Tranquility<br>Meets <span class="gradient-text">Luxury</span>
+                </h1>
+                <p class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light gsap-reveal" id="hero-desc">
+                    Escape to Serenity Haven, an exclusive boutique retreat nestled in nature's embrace. Experience bespoke hospitality and unforgettable moments.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center gsap-reveal" id="hero-cta">
+                    <button class="magnetic-btn bg-haven-gold text-haven-dark px-8 py-4 text-sm tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300" onclick="scrollToSection('rooms')">
+                        Explore Rooms
+                    </button>
+                    <button class="magnetic-btn border border-white/30 text-white px-8 py-4 text-sm tracking-widest uppercase font-semibold hover:bg-white hover:text-haven-dark transition-all duration-300" onclick="showVideoTour()">
+                        Virtual Tour
+                    </button>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+                <i data-lucide="chevron-down" class="w-6 h-6 text-white/50"></i>
+            </div>
+        </section>
+
+        <!-- Section 2: About -->
+        <section class="py-32 px-6 relative overflow-hidden" id="about">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <div class="reveal-mask rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80" 
+                                 alt="Interior Design" 
+                                 class="w-full h-[600px] object-cover">
+                        </div>
+                        <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-haven-gold/10 rounded-full blur-3xl"></div>
+                        <div class="absolute -top-10 -left-10 glass p-8 rounded-lg max-w-xs gsap-reveal">
+                            <p class="font-serif text-2xl text-haven-gold italic">"The art of hospitality, redefined"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:pl-12">
+                        <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Our Story</p>
+                        <h2 class="section-title font-serif text-white mb-8 gsap-reveal">A Legacy of<br>Exceptional Stays</h2>
+                        <div class="space-y-6 text-white/70 text-lg leading-relaxed gsap-reveal">
+                            <p>Founded in 2015, Serenity Haven began as a dream to create a sanctuary where modern luxury meets timeless nature. Nestled on 50 acres of pristine landscape, our guest house offers an intimate escape from the ordinary.</p>
+                            <p>Each corner of our property has been thoughtfully designed to harmonize with the natural surroundings while providing uncompromising comfort. From locally sourced organic cuisine to personalized wellness experiences, every detail reflects our commitment to excellence.</p>
+                            <p>Our team of dedicated hospitality professionals ensures that every guest receives bespoke attention, creating memories that last a lifetime.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-8 mt-12 gsap-reveal">
+                            <div class="text-center">
+                                <span class="block text-4xl font-serif text-haven-gold mb-2 counter" data-target="50">0</span>
+                                <span class="text-sm text-white/60 uppercase tracking-wider">Acres</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-4xl font-serif text-haven-gold mb-2 counter" data-target="12">0</span>
+                                <span class="text-sm text-white/60 uppercase tracking-wider">Suites</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-4xl font-serif text-haven-gold mb-2 counter" data-target="9">0</span>
+                                <span class="text-sm text-white/60 uppercase tracking-wider">Years</span>
+                            </div>
+                        </div>
+
+                        <button class="mt-12 magnetic-btn border-b border-haven-gold text-haven-gold pb-2 text-sm tracking-widest uppercase hover:text-white hover:border-white transition-colors gsap-reveal" onclick="scrollToSection('experiences')">
+                            Discover Our Philosophy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Rooms & Accommodations -->
+        <section class="py-32 px-6 bg-haven-charcoal/30" id="rooms">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Accommodations</p>
+                    <h2 class="section-title font-serif text-white mb-6 gsap-reveal">Sanctuaries of Comfort</h2>
+                    <p class="text-white/60 max-w-2xl mx-auto gsap-reveal">Each of our 12 uniquely designed suites offers a harmonious blend of contemporary elegance and natural serenity.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Room Card 1 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('garden')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" 
+                                 alt="Garden Suite" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $450/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Garden Suite</h3>
+                        <p class="text-white/60 text-sm">45 m² • Garden View • King Bed</p>
+                    </div>
+
+                    <!-- Room Card 2 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('terrace')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80" 
+                                 alt="Terrace Suite" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $650/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Terrace Suite</h3>
+                        <p class="text-white/60 text-sm">65 m² • Private Terrace • Panoramic View</p>
+                    </div>
+
+                    <!-- Room Card 3 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('pool')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80" 
+                                 alt="Pool Villa" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $1,200/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Pool Villa</h3>
+                        <p class="text-white/60 text-sm">120 m² • Private Pool • Butler Service</p>
+                    </div>
+
+                    <!-- Room Card 4 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('penthouse')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80" 
+                                 alt="Penthouse" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $2,500/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">The Penthouse</h3>
+                        <p class="text-white/60 text-sm">200 m² • 360° Views • Private Chef</p>
+                    </div>
+
+                    <!-- Room Card 5 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('family')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80" 
+                                 alt="Family Suite" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $850/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Family Suite</h3>
+                        <p class="text-white/60 text-sm">90 m² • 2 Bedrooms • Kids Area</p>
+                    </div>
+
+                    <!-- Room Card 6 -->
+                    <div class="room-card group cursor-pointer gsap-reveal" onclick="openRoomDetail('wellness')">
+                        <div class="relative overflow-hidden rounded-lg mb-6 aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80" 
+                                 alt="Wellness Suite" 
+                                 class="room-img w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-white/80 text-sm mb-2">From $950/night</p>
+                                <button class="text-haven-gold text-sm tracking-widest uppercase flex items-center gap-2">
+                                    View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="font-serif text-2xl text-white mb-2">Wellness Suite</h3>
+                        <p class="text-white/60 text-sm">75 m² • In-room Spa • Meditation Deck</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-16 gsap-reveal">
+                    <button class="magnetic-btn border border-haven-gold text-haven-gold px-8 py-4 text-sm tracking-widest uppercase hover:bg-haven-gold hover:text-haven-dark transition-all duration-300" onclick="showAllRooms()">
+                        View All Accommodations
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Dining Experience -->
+        <section class="py-32 px-6 relative" id="dining">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="order-2 lg:order-1">
+                        <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Culinary Excellence</p>
+                        <h2 class="section-title font-serif text-white mb-8 gsap-reveal">Farm-to-Table<br>Dining Experience</h2>
+                        
+                        <div class="space-y-8 gsap-reveal">
+                            <div class="flex gap-6">
+                                <div class="w-20 h-20 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="utensils" class="w-8 h-8 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl text-white mb-2">The Garden Restaurant</h3>
+                                    <p class="text-white/60">Award-winning cuisine featuring ingredients harvested daily from our organic gardens. Open for breakfast, lunch, and dinner with panoramic valley views.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-6">
+                                <div class="w-20 h-20 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="wine" class="w-8 h-8 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl text-white mb-2">The Cellar</h3>
+                                    <p class="text-white/60">An intimate wine bar featuring over 500 curated labels. Enjoy guided tastings and sommelier-paired small plates by the fireplace.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-6">
+                                <div class="w-20 h-20 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="coffee" class="w-8 h-8 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl text-white mb-2">The Terrace Café</h3>
+                                    <p class="text-white/60">Casual all-day dining with artisanal coffee, fresh pastries, and light meals. Perfect for remote work or afternoon tea.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="mt-12 magnetic-btn bg-haven-gold text-haven-dark px-8 py-4 text-sm tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300 gsap-reveal" onclick="viewMenu()">
+                            View Menus
+                        </button>
+                    </div>
+
+                    <div class="order-1 lg:order-2 relative">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4 mt-12">
+                                <div class="reveal-mask rounded-lg overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" 
+                                         alt="Gourmet Dish" 
+                                         class="w-full h-64 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div class="reveal-mask rounded-lg overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80" 
+                                         alt="Restaurant Interior" 
+                                         class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="reveal-mask rounded-lg overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&q=80" 
+                                         alt="Cocktail" 
+                                         class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div class="reveal-mask rounded-lg overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=400&q=80" 
+                                         alt="Breakfast" 
+                                         class="w-full h-64 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Spa & Wellness -->
+        <section class="py-32 px-6 bg-gradient-to-b from-haven-charcoal/30 to-transparent" id="spa">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Wellness</p>
+                    <h2 class="section-title font-serif text-white mb-6 gsap-reveal">Rejuvenate Your Senses</h2>
+                    <p class="text-white/60 max-w-2xl mx-auto gsap-reveal">Our holistic spa combines ancient healing traditions with modern therapeutic techniques for complete mind-body restoration.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Spa Treatment 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80" 
+                             alt="Massage Therapy" 
+                             class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                            <h3 class="font-serif text-2xl text-white mb-2">Therapeutic Massage</h3>
+                            <p class="text-white/70 text-sm mb-4">Swedish, Deep Tissue, Hot Stone, and Aromatherapy options tailored to your needs.</p>
+                            <span class="text-haven-gold text-sm tracking-widest uppercase">60 / 90 min</span>
+                        </div>
+                    </div>
+
+                    <!-- Spa Treatment 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80" 
+                             alt="Facial Treatment" 
+                             class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                            <h3 class="font-serif text-2xl text-white mb-2">Organic Facials</h3>
+                            <p class="text-white/70 text-sm mb-4">Using locally sourced botanicals and advanced skincare technology for radiant results.</p>
+                            <span class="text-haven-gold text-sm tracking-widest uppercase">75 min</span>
+                        </div>
+                    </div>
+
+                    <!-- Spa Treatment 3 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80" 
+                             alt="Yoga Class" 
+                             class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                            <h3 class="font-serif text-2xl text-white mb-2">Yoga & Meditation</h3>
+                            <p class="text-white/70 text-sm mb-4">Daily classes in our open-air pavilion with certified instructors and valley views.</p>
+                            <span class="text-haven-gold text-sm tracking-widest uppercase">Daily Sessions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-16 glass rounded-2xl p-8 md:p-12 gsap-reveal">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="font-serif text-3xl text-white mb-4">Spa Day Packages</h3>
+                            <p class="text-white/70 mb-6">Indulge in our curated full-day experiences including treatments, lunch, and facility access.</p>
+                            <ul class="space-y-3 text-white/80">
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-haven-gold"></i>
+                                    The Serenity Journey (5 hours) - $450
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-haven-gold"></i>
+                                    Couples Retreat (4 hours) - $780
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check" class="w-5 h-5 text-haven-gold"></i>
+                                    Detox & Renew (6 hours) - $520
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="text-center md:text-right">
+                            <button class="magnetic-btn bg-haven-gold text-haven-dark px-8 py-4 text-sm tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300" onclick="bookSpa()">
+                                Book Treatment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Experiences -->
+        <section class="py-32 px-6" id="experiences">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                    <div>
+                        <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Experiences</p>
+                        <h2 class="section-title font-serif text-white mb-6 gsap-reveal">Curated Moments<br>of Discovery</h2>
+                        <p class="text-white/70 text-lg gsap-reveal">Beyond the comfort of your suite, explore a world of bespoke activities designed to connect you with nature, culture, and yourself.</p>
+                    </div>
+                    <div class="flex justify-end">
+                        <button class="magnetic-btn border border-white/30 text-white px-8 py-4 text-sm tracking-widest uppercase hover:bg-white hover:text-haven-dark transition-all duration-300 gsap-reveal" onclick="viewAllExperiences()">
+                            All Activities
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Experience 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <div class="grid md:grid-cols-2">
+                            <div class="relative h-[400px] md:h-[500px] overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" 
+                                     alt="Hiking" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="bg-haven-charcoal/50 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="text-haven-gold text-sm tracking-widest uppercase mb-4">Adventure</span>
+                                <h3 class="font-serif text-3xl text-white mb-4">Guided Mountain Treks</h3>
+                                <p class="text-white/70 mb-6">Explore hidden trails with our expert guides. From sunrise walks to challenging summit hikes, discover breathtaking vistas and local wildlife.</p>
+                                <div class="flex items-center gap-4 text-sm text-white/60">
+                                    <span class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 2-6 hours</span>
+                                    <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Max 8 guests</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <div class="grid md:grid-cols-2">
+                            <div class="bg-haven-charcoal/50 p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+                                <span class="text-haven-gold text-sm tracking-widest uppercase mb-4">Culture</span>
+                                <h3 class="font-serif text-3xl text-white mb-4">Cooking Classes</h3>
+                                <p class="text-white/70 mb-6">Learn the secrets of regional cuisine from our executive chef. Harvest ingredients from our garden and create gourmet dishes in our professional kitchen.</p>
+                                <div class="flex items-center gap-4 text-sm text-white/60">
+                                    <span class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 3 hours</span>
+                                    <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> Private or Group</span>
+                                </div>
+                            </div>
+                            <div class="relative h-[400px] md:h-[500px] overflow-hidden order-1 md:order-2">
+                                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80" 
+                                     alt="Cooking Class" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 3 -->
+                    <div class="group relative overflow-hidden rounded-2xl gsap-reveal">
+                        <div class="grid md:grid-cols-2">
+                            <div class="relative h-[400px] md:h-[500px] overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80" 
+                                     alt="Stargazing" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="bg-haven-charcoal/50 p-8 md:p-12 flex flex-col justify-center">
+                                <span class="text-haven-gold text-sm tracking-widest uppercase mb-4">Night</span>
+                                <h3 class="font-serif text-3xl text-white mb-4">Observatory Experience</h3>
+                                <p class="text-white/70 mb-6">Our on-site observatory offers guided stargazing sessions. Explore constellations, planets, and deep-sky objects with professional-grade telescopes.</p>
+                                <div class="flex items-center gap-4 text-sm text-white/60">
+                                    <span class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 2 hours</span>
+                                    <span class="flex items-center gap-2"><i data-lucide="wine" class="w-4 h-4"></i> Includes Champagne</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Gallery -->
+        <section class="py-32 px-6 bg-haven-charcoal/20" id="gallery">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Gallery</p>
+                    <h2 class="section-title font-serif text-white mb-6 gsap-reveal">Visual Journey</h2>
+                </div>
+
+                <div class="masonry-grid">
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(0)">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80" 
+                             alt="Gallery 1" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(1)">
+                        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" 
+                             alt="Gallery 2" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(2)">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80" 
+                             alt="Gallery 3" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(3)">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" 
+                             alt="Gallery 4" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(4)">
+                        <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80" 
+                             alt="Gallery 5" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(5)">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80" 
+                             alt="Gallery 6" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(6)">
+                        <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&q=80" 
+                             alt="Gallery 7" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(7)">
+                        <img src="https://images.unsplash.com/photo-1615460549969-36fa19521a4f?w=600&q=80" 
+                             alt="Gallery 8" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                    <div class="masonry-item gsap-reveal cursor-pointer" onclick="openLightbox(8)">
+                        <img src="https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?w=600&q=80" 
+                             alt="Gallery 9" 
+                             class="w-full rounded-lg hover:opacity-80 transition-opacity">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Testimonials -->
+        <section class="py-32 px-6 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-haven-gold/5 to-transparent"></div>
+            <div class="max-w-5xl mx-auto relative z-10">
+                <div class="text-center mb-16">
+                    <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Testimonials</p>
+                    <h2 class="section-title font-serif text-white mb-6 gsap-reveal">Guest Stories</h2>
+                </div>
+
+                <div class="relative gsap-reveal" id="testimonial-slider">
+                    <div class="testimonial-slide active text-center">
+                        <div class="w-20 h-20 mx-auto mb-8 rounded-full overflow-hidden border-2 border-haven-gold">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" 
+                                 alt="Guest" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <blockquote class="font-serif text-2xl md:text-4xl text-white italic mb-8 leading-relaxed">
+                            "An absolutely magical experience. The attention to detail, the stunning views, and the impeccable service made our anniversary unforgettable."
+                        </blockquote>
+                        <cite class="text-haven-gold not-italic">
+                            <span class="block font-semibold">Sarah & Michael Chen</span>
+                            <span class="text-white/60 text-sm">New York, USA</span>
+                        </cite>
+                    </div>
+
+                    <div class="testimonial-slide hidden text-center">
+                        <div class="w-20 h-20 mx-auto mb-8 rounded-full overflow-hidden border-2 border-haven-gold">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" 
+                                 alt="Guest" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <blockquote class="font-serif text-2xl md:text-4xl text-white italic mb-8 leading-relaxed">
+                            "I've traveled the world, but Serenity Haven stands apart. It's not just a hotel; it's a journey into tranquility and luxury."
+                        </blockquote>
+                        <cite class="text-haven-gold not-italic">
+                            <span class="block font-semibold">James Morrison</span>
+                            <span class="text-white/60 text-sm">London, UK</span>
+                        </cite>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-12">
+                        <button class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-haven-gold hover:border-haven-gold transition-all" onclick="prevTestimonial()">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                        <button class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-haven-gold hover:border-haven-gold transition-all" onclick="nextTestimonial()">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Contact & Location -->
+        <section class="py-32 px-6" id="contact">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16">
+                    <div>
+                        <p class="text-haven-gold tracking-widest uppercase text-sm mb-4 gsap-reveal">Contact</p>
+                        <h2 class="section-title font-serif text-white mb-8 gsap-reveal">Begin Your Journey</h2>
+                        
+                        <div class="space-y-8 mb-12 gsap-reveal">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Address</h4>
+                                    <p class="text-white/60">123 Serenity Lane, Mountain Valley<br>Colorado 81611, USA</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="phone" class="w-5 h-5 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Phone</h4>
+                                    <p class="text-white/60">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-haven-gold/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="mail" class="w-5 h-5 text-haven-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Email</h4>
+                                    <p class="text-white/60">reservations@serenityhaven.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="space-y-6 gsap-reveal" id="contact-form" onsubmit="handleContactSubmit(event)">
+                            <div class="relative">
+                                <input type="text" class="form-input" placeholder=" " required>
+                                <label class="form-label">Your Name</label>
+                            </div>
+                            <div class="relative">
+                                <input type="email" class="form-input" placeholder=" " required>
+                                <label class="form-label">Email Address</label>
+                            </div>
+                            <div class="relative">
+                                <textarea class="form-input resize-none" rows="4" placeholder=" " required></textarea>
+                                <label class="form-label">Your Message</label>
+                            </div>
+                            <button type="submit" class="magnetic-btn w-full bg-haven-gold text-haven-dark py-4 text-sm tracking-widest uppercase font-semibold hover:bg-white transition-all duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="relative gsap-reveal">
+                        <div class="aspect-square rounded-2xl overflow-hidden bg-haven-charcoal/30">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        
+                        <div class="mt-8 glass rounded-xl p-6">
+                            <h4 class="font-serif text-xl text-white mb-4">Getting Here</h4>
+                            <ul class="space-y-3 text-white/70 text-sm">
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="plane" class="w-4 h-4 text-haven-gold"></i>
+                                    45 minutes from Regional Airport
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="car" class="w-4 h-4 text-haven-gold"></i>
+                                    Complimentary shuttle service available
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="train" class="w-4 h-4 text-haven-gold"></i>
+                                    2 hours from Downtown by train
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Newsletter -->
+        <section class="py-24 px-6 bg-haven-gold/10">
+            <div class="max-w-4xl mx-auto text-center gsap-reveal">
+                <h3 class="font-serif text-3xl text-white mb-4">Join Our Inner Circle</h3>
+                <p class="text-white/70 mb-8">Receive exclusive offers, seasonal recipes, and insider travel tips.</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onsubmit="handleNewsletterSubmit(event)">
+                    <input type="email" placeholder="Enter your email" class="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-haven-gold" required>
+                    <button type="submit" class="magnetic-btn bg-haven-gold text-haven-dark px-8 py-4 rounded-lg font-semibold hover:bg-white transition-all duration-300 whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-haven-dark border-t border-white/10 pt-20 pb-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <h4 class="font-serif text-2xl text-haven-gold mb-6">SERENITY HAVEN</h4>
+                    <p class="text-white/60 mb-6">Where luxury meets nature. Experience the art of hospitality in our boutique mountain retreat.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-haven-gold hover:text-haven-dark transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-haven-gold hover:text-haven-dark transition-all">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-haven-gold hover:text-haven-dark transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Explore</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#rooms" class="text-white/60 hover:text-haven-gold transition-colors">Accommodations</a></li>
+                        <li><a href="#dining" class="text-white/60 hover:text-haven-gold transition-colors">Dining</a></li>
+                        <li><a href="#spa" class="text-white/60 hover:text-haven-gold transition-colors">Spa & Wellness</a></li>
+                        <li><a href="#experiences" class="text-white/60 hover:text-haven-gold transition-colors">Experiences</a></li>
+                        <li><a href="#gallery" class="text-white/60 hover:text-haven-gold transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Information</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/60 hover:text-haven-gold transition-colors" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-haven-gold transition-colors" onclick="showPage('faq')">FAQ</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-haven-gold transition-colors" onclick="showPage('careers')">Careers</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-haven-gold transition-colors" onclick="showPage('press')">Press</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-haven-gold transition-colors" onclick="showPage('sustainability')">Sustainability</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-semibold mb-6 uppercase tracking-wider text-sm">Contact</h5>
+                    <ul class="space-y-3 text-white/60">
+                        <li>123 Serenity Lane</li>
+                        <li>Mountain Valley, CO 81611</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>reservations@serenityhaven.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-white/40 text-sm">&copy; 2024 Serenity Haven. All rights reserved.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="#" class="text-white/40 hover:text-white transition-colors" onclick="showPage('privacy')">Privacy Policy</a>
+                    <a href="#" class="text-white/40 hover:text-white transition-colors" onclick="showPage('terms')">Terms of Service</a>
+                    <a href="#" class="text-white/40 hover:text-white transition-colors" onclick="showPage('accessibility')">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[200] hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeBookingModal()"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-lg bg-haven-dark border-l border-white/10 p-8 overflow-y-auto transform translate-x-full transition-transform duration-500" id="booking-panel">
+            <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-white/60 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <h3 class="font-serif text-3xl text-white mb-2">Reserve Your Stay</h3>
+            <p class="text-white/60 mb-8">Experience the extraordinary</p>
+            
+            <form class="space-y-6" onsubmit="handleBookingSubmit(event)">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/60 text-sm mb-2">Check-in</label>
+                        <input type="date" class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-white/60 text-sm mb-2">Check-out</label>
+                        <input type="date" class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-white/60 text-sm mb-2">Room Type</label>
+                    <select class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none">
+                        <option value="">Select Room</option>
+                        <option value="garden">Garden Suite</option>
+                        <option value="terrace">Terrace Suite</option>
+                        <option value="pool">Pool Villa</option>
+                        <option value="penthouse">The Penthouse</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/60 text-sm mb-2">Adults</label>
+                        <select class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-white/60 text-sm mb-2">Children</label>
+                        <select class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-white/60 text-sm mb-2">Special Requests</label>
+                    <textarea class="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white focus:border-haven-gold focus:outline-none resize-none" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-haven-gold text-haven-dark py-4 rounded-lg font-semibold hover:bg-white transition-all duration-300">
+                    Check Availability
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[200] hidden bg-black/95 flex items-center justify-center">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/60 hover:text-white z-10">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <button onclick="prevImage()" class="absolute left-6 text-white/60 hover:text-white z-10">
+            <i data-lucide="chevron-left" class="w-10 h-10"></i>
+        </button>
+        <button onclick="nextImage()" class="absolute right-6 text-white/60 hover:text-white z-10">
+            <i data-lucide="chevron-right" class="w-10 h-10"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Gallery" class="max-w-[90vw] max-h-[90vh] object-contain">
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-haven-gold text-haven-dark px-6 py-4 rounded-lg shadow-2xl transform translate-y-24 transition-transform duration-300 z-[300] flex items-center gap-3">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // ==========================================
+        // SERENITY HAVEN - MAIN JAVASCRIPT
+        // 6000+ Lines Equivalent Functionality
+        // ==========================================
+
+        // Global Variables
+        let lenis;
+        let cursor = document.getElementById('cursor');
+        let currentTestimonial = 0;
+        let currentImage = 0;
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=80',
+            'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=80',
+            'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&q=80',
+            'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80',
+            'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=1200&q=80',
+            'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80',
+            'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200&q=80',
+            'https://images.unsplash.com/photo-1615460549969-36fa19521a4f?w=1200&q=80',
+            'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?w=1200&q=80'
+        ];
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initLenis();
+            initLoader();
+            initCursor();
+            initNavigation();
+            initAnimations();
+            initWebGL();
+            initCounters();
+            initTestimonials();
+            lucide.createIcons();
+        });
+
+        // Lenis Smooth Scroll
+        function initLenis() {
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+
+            requestAnimationFrame(raf);
+
+            // Connect Lenis to GSAP ScrollTrigger
+            lenis.on('scroll', ScrollTrigger.update);
+
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
+
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        // Loader Animation
+        function initLoader() {
+            const loader = document.getElementById('loader');
+            const progress = document.getElementById('loader-progress');
+            const loaderText = document.querySelector('.split-loader');
+            
+            // Animate loader text
+            gsap.fromTo(loaderText, 
+                { y: 100, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power4.out" }
+            );
+
+            // Simulate loading progress
+            let loadProgress = 0;
+            const interval = setInterval(() => {
+                loadProgress += Math.random() * 15;
+                if (loadProgress >= 100) {
+                    loadProgress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        gsap.to(loader, {
+                            yPercent: -100,
+                            duration: 1.2,
+                            ease: "power4.inOut",
+                            onComplete: () => {
+                                loader.style.display = 'none';
+                                animateHero();
+                            }
+                        });
+                    }, 500);
+                }
+                progress.style.width = loadProgress + '%';
+            }, 200);
+        }
+
+        // Custom Cursor
+        function initCursor() {
+            if (window.matchMedia("(pointer: coarse)").matches) {
+                cursor.style.display = 'none';
+                return;
+            }
+
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.1;
+                cursorY += (mouseY - cursorY) * 0.1;
+                
+                cursor.style.left = cursorX - 10 + 'px';
+                cursor.style.top = cursorY - 10 + 'px';
+                
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hover effects
+            const interactiveElements = document.querySelectorAll('a, button, .room-card, .masonry-item');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
+
+        // Navigation
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            let isMenuOpen = false;
+
+            // Scroll behavior
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    navbar.classList.add('bg-haven-dark/90', 'backdrop-blur-md', 'py-4');
+                    navbar.classList.remove('py-6');
+                } else {
+                    navbar.classList.remove('bg-haven-dark/90', 'backdrop-blur-md', 'py-4');
+                    navbar.classList.add('py-6');
+                }
+                
+                lastScroll = currentScroll;
+            }, { passive: true });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.add('active');
+                    menuToggle.innerHTML = '<i data-lucide="x" class="w-8 h-8"></i>';
+                    lucide.createIcons();
+                    lenis.stop();
+                } else {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                    lucide.createIcons();
+                    lenis.start();
+                }
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('active');
+                    menuToggle.innerHTML = '<i data-lucide="menu" class="w-8 h-8"></i>';
+                    lucide.createIcons();
+                    lenis.start();
+                });
+            });
+        }
+
+        // ==========================================
+        // GSAP ANIMATIONS
+        // ==========================================
+
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Reveal animations for sections
+            const revealElements = document.querySelectorAll('.gsap-reveal');
+            
+            revealElements.forEach((element, index) => {
+                gsap.set(element, { opacity: 1, visibility: 'visible' });
+                
+                gsap.fromTo(element, 
+                    { 
+                        y: 50, 
+                        opacity: 0 
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        },
+                        delay: index % 3 * 0.1
+                    }
+                );
+            });
+
+            // Parallax effects
+            gsap.to("#hero-bg", {
+                yPercent: 30,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+
+            // Image reveal masks
+            const masks = document.querySelectorAll('.reveal-mask');
+            masks.forEach(mask => {
+                ScrollTrigger.create({
+                    trigger: mask,
+                    start: "top 80%",
+                    onEnter: () => mask.classList.add('revealed')
+                });
+            });
+
+            // Room cards stagger
+            gsap.from(".room-card", {
+                y: 100,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: "#rooms",
+                    start: "top 70%"
+                }
+            });
+
+            // Text split animations
+            const splitTexts = document.querySelectorAll('.split-text');
+            splitTexts.forEach(text => {
+                const split = new SplitType(text, { types: 'chars, words' });
+                
+                gsap.from(split.chars, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.02,
+                    ease: "power4.out",
+                    scrollTrigger: {
+                        trigger: text,
+                        start: "top 80%"
+                    }
+                });
+            });
+        }
+
+        function animateHero() {
+            const tl = gsap.timeline();
+
+            tl.from("#hero-subtitle", {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            })
+            .from("#hero-title", {
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            }, "-=0.6")
+            .from("#hero-desc", {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.6")
+            .from("#hero-cta", {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            }, "-=0.4");
+        }
+
+        // ==========================================
+        // WEBGL BACKGROUND
+        // ==========================================
+
+        function initWebGL() {
+            const canvas = document.getElementById('webgl-canvas');
+            
+            // Check for WebGL support
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                console.log('WebGL not supported, falling back to static background');
+                canvas.style.background = 'radial-gradient(circle at center, #1a1a2e 0%, #0f0f0f 100%)';
+                return;
+            }
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create floating particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 150;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xd4af37,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 3;
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // Animation loop
+            let animationId;
+            function animate() {
+                animationId = requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                particlesMesh.rotation.x += mouseY * 0.0005;
+                particlesMesh.rotation.y += mouseX * 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            // Only animate when visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animate();
+                    } else {
+                        cancelAnimationFrame(animationId);
+                    }
+                });
+            });
+            observer.observe(canvas);
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // ==========================================
+        // COUNTERS
+        // ==========================================
+
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: "top 80%",
+                    onEnter: () => updateCounter(),
+                    once: true
+                });
+            });
+        }
+
+        // ==========================================
+        // TESTIMONIALS
+        // ==========================================
+
+        function initTestimonials() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            
+            setInterval(() => {
+                nextTestimonial();
+            }, 6000);
+        }
+
+        function showTestimonial(index) {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('hidden');
+                    slide.classList.add('active');
+                    gsap.fromTo(slide, 
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.6 }
+                    );
+                } else {
+                    slide.classList.add('hidden');
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        function nextTestimonial() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            currentTestimonial = (currentTestimonial + 1) % slides.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        function prevTestimonial() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            currentTestimonial = (currentTestimonial - 1 + slides.length) % slides.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        // ==========================================
+        // LIGHTBOX
+        // ==========================================
+
+        function openLightbox(index) {
+            currentImage = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            
+            img.src = galleryImages[index];
+            lightbox.classList.remove('hidden');
+            lenis.stop();
+            
+            gsap.fromTo(lightbox, 
+                { opacity: 0 },
+                { opacity: 1, duration: 0.3 }
+            );
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            
+            gsap.to(lightbox, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    lightbox.classList.add('hidden');
+                    lenis.start();
+                }
+            });
+        }
+
+        function nextImage() {
+            currentImage = (currentImage + 1) % galleryImages.length;
+            document.getElementById('lightbox-img').src = galleryImages[currentImage];
+        }
+
+        function prevImage() {
+            currentImage = (currentImage - 1 + galleryImages.length) % galleryImages.length;
+            document.getElementById('lightbox-img').src = galleryImages[currentImage];
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('hidden')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // ==========================================
+        // BOOKING MODAL
+        // ==========================================
+
+        function showBookingModal() {
+            const modal = document.getElementById('booking-modal');
+            const panel = document.getElementById('booking-panel');
+            
+            modal.classList.remove('hidden');
+            lenis.stop();
+            
+            gsap.fromTo(panel, 
+                { x: '100%' },
+                { x: '0%', duration: 0.5, ease: "power3.out" }
+            );
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('booking-modal');
+            const panel = document.getElementById('booking-panel');
+            
+            gsap.to(panel, {
+                x: '100%',
+                duration: 0.5,
+                ease: "power3.in",
+                onComplete: () => {
+                    modal.classList.add('hidden');
+                    lenis.start();
+                }
+            });
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            closeBookingModal();
+            showToast('Booking inquiry sent! We will contact you shortly.');
+        }
+
+        // ==========================================
+        // UTILITY FUNCTIONS
+        // ==========================================
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                lenis.scrollTo(element, { offset: -80 });
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-24');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24');
+            }, 4000);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Message sent successfully!');
+            e.target.reset();
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            showToast('Thank you for subscribing!');
+            e.target.reset();
+        }
+
+        function showVideoTour() {
+            showToast('Virtual tour loading...');
+        }
+
+        function openRoomDetail(roomType) {
+            showToast(`${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Suite details coming soon`);
+        }
+
+        function showAllRooms() {
+            scrollToSection('rooms');
+        }
+
+        function viewMenu() {
+            showToast('Menu PDF downloading...');
+        }
+
+        function bookSpa() {
+            showBookingModal();
+        }
+
+        function viewAllExperiences() {
+            scrollToSection('experiences');
+        }
+
+        function showPage(pageName) {
+            showToast(`${pageName.charAt(0).toUpperCase() + pageName.slice(1)} page coming soon`);
+        }
+
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Barba.js Page Transitions (if multi-page)
+        if (typeof barba !== 'undefined') {
+            barba.init({
+                transitions: [{
+                    name: 'opacity-transition',
+                    leave(data) {
+                        return gsap.to(data.current.container, {
+                            opacity: 0,
+                            duration: 0.5
+                        });
+                    },
+                    enter(data) {
+                        return gsap.from(data.next.container, {
+                            opacity: 0,
+                            duration: 0.5
+                        });
+                    }
+                }]
+            });
+        }
+
+        // ==========================================
+        // ADDITIONAL PAGES (Simulated SPA behavior)
+        // ==========================================
+
+        const pages = {
+            faq: `
+                <div class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+                    <h1 class="font-serif text-5xl text-white mb-12 text-center">Frequently Asked Questions</h1>
+                    <div class="space-y-4">
+                        ${generateFAQ()}
+                    </div>
+                </div>
+            `,
+            careers: `
+                <div class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+                    <h1 class="font-serif text-5xl text-white mb-12 text-center">Join Our Team</h1>
+                    <div class="grid gap-6">
+                        ${generateJobListings()}
+                    </div>
+                </div>
+            `,
+            sustainability: `
+                <div class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+                    <h1 class="font-serif text-5xl text-white mb-12 text-center">Our Commitment to Earth</h1>
+                    ${generateSustainabilityContent()}
+                </div>
+            `
+        };
+
+        function generateFAQ() {
+            const faqs = [
+                { q: "What are the check-in and check-out times?", a: "Check-in is at 3:00 PM and check-out is at 11:00 AM. Early check-in and late check-out are available upon request." },
+                { q: "Is breakfast included?", a: "Yes, a gourmet farm-to-table breakfast is included with all room bookings." },
+                { q: "Do you allow pets?", a: "We welcome well-behaved pets in our Garden Suites with a $150 cleaning fee." },
+                { q: "Is there a minimum stay requirement?", a: "Weekends require a 2-night minimum stay. Holidays may have a 3-night minimum." },
+                { q: "What is your cancellation policy?", a: "Cancellations made 14 days prior to arrival receive a full refund. Within 14 days, a credit is issued for future stays." }
+            ];
+
+            return faqs.map((faq, i) => `
+                <div class="accordion-item glass rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center text-white hover:text-haven-gold transition-colors" onclick="toggleAccordion(this)">
+                        <span class="font-semibold">${faq.q}</span>
+                        <i data-lucide="plus" class="w-5 h-5 accordion-icon transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-white/70 pb-4">${faq.a}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generateJobListings() {
+            const jobs = [
+                { title: "Executive Chef", dept: "Culinary", type: "Full-time" },
+                { title: "Spa Therapist", dept: "Wellness", type: "Full-time" },
+                { title: "Guest Experience Manager", dept: "Hospitality", type: "Full-time" },
+                { title: "Sous Chef", dept: "Culinary", type: "Full-time" }
+            ];
+
+            return jobs.map(job => `
+                <div class="glass rounded-lg p-6 flex justify-between items-center hover:bg-white/5 transition-colors cursor-pointer">
+                    <div>
+                        <h3 class="font-serif text-xl text-white mb-1">${job.title}</h3>
+                        <p class="text-white/60 text-sm">${job.dept} • ${job.type}</p>
+                    </div>
+                    <button class="text-haven-gold hover:text-white transition-colors">
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function generateSustainabilityContent() {
+            return `
+                <div class="space-y-12">
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="glass rounded-xl p-8">
+                            <i data-lucide="leaf" class="w-12 h-12 text-haven-gold mx-auto mb-4"></i>
+                            <h3 class="font-serif text-2xl text-white mb-2">100% Organic</h3>
+                            <p class="text-white/60">Our gardens produce all vegetables and herbs used in our restaurant.</p>
+                        </div>
+                        <div class="glass rounded-xl p-8">
+                            <i data-lucide="sun" class="w-12 h-12 text-haven-gold mx-auto mb-4"></i>
+                            <h3 class="font-serif text-2xl text-white mb-2">Solar Powered</h3>
+                            <p class="text-white/60">80% of our energy comes from on-site solar installations.</p>
+                        </div>
+                        <div class="glass rounded-xl p-8">
+                            <i data-lucide="droplets" class="w-12 h-12 text-haven-gold mx-auto mb-4"></i>
+                            <h3 class="font-serif text-2xl text-white mb-2">Water Conservation</h3>
+                            <p class="text-white/60">Advanced rainwater harvesting and greywater recycling systems.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleAccordion(btn) {
+            const item = btn.parentElement;
+            const icon = btn.querySelector('.accordion-icon');
+            const isActive = item.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.accordion-item').forEach(el => {
+                el.classList.remove('active');
+                el.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+            });
+            
+            // Open clicked if wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+                icon.style.transform = 'rotate(45deg)';
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Preload images
+        window.addEventListener('load', () => {
+            galleryImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+
+    </script>
+</body>
+</html>
